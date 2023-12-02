@@ -2,24 +2,26 @@ import { StyleSheet, Text, View, FlatList, TextInput } from 'react-native'
 import { useState } from 'react';
 import React from 'react'
 import Header from '../Components/Header'
-import { users } from '../Utils/data'
-import CardUser from '../Components/CardUser'
-import AddButton from '../Components/floatButton'
+import { families } from '../Utils/data'
+import CardSimple from '../Components/CardSimple';
+import AddButton from '../Components/floatButton';
 
-const Users = () => {
+const Family = () => {
   const handleCardPress = (id) => {
     console.log(`Card with ID ${id} was clicked`);
   }
   const [searchTerm, setSearchTerm] = useState('')
-  const [filteredData, setFilteredData] = useState(users)  
-  
+  const [filteredData, setFilteredData] = useState(families)  
+
   const handleSearchChange = (text) => {
     setSearchTerm(text);
-    const filteredItems = users.filter((item) => {
-      return item.fullName.toLowerCase().includes(text.toLowerCase());
+    const filteredItems = families.filter((item) => {
+      return item.name.toLowerCase().includes(text.toLowerCase());
     });
     setFilteredData(filteredItems);
   };
+
+
   return (
     <>
     <Header />
@@ -32,7 +34,7 @@ const Users = () => {
     <View>
       <FlatList
         data={filteredData}
-        renderItem={({ item }) => <CardUser item={item} fullName={item.fullName} onPress={() => handleCardPress(item.id)} />}
+        renderItem={({ item }) => <CardSimple item={item} onPress={() => handleCardPress(item.id)} />}
         keyExtractor = {(item) => item.id}
       />
     </View>
@@ -41,7 +43,7 @@ const Users = () => {
   )
 }
 
-export default Users
+export default Family
 
 const styles = StyleSheet.create({
   subTitle:{

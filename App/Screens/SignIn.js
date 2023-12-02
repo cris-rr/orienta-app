@@ -13,7 +13,7 @@ import { useFonts } from 'expo-font'
 import Colors from '../Utils/Colors'
 import imageApp from './../../assets/images/hands3.png'
 
-const SignIn = () => {
+const SignIn = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     'Poppins-Regular': require('../../assets/fonts/Poppins-Regular.ttf'),
     'Poppins-Bold': require('../../assets/fonts/Poppins-Bold.ttf'),
@@ -26,7 +26,7 @@ const SignIn = () => {
     password: '',
   });
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#e8ecf4' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#e8ecf4', width: '100%' }}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Image source={imageApp}
@@ -74,7 +74,7 @@ const SignIn = () => {
           <View style={styles.formAction}>
             <TouchableOpacity
               onPress={() => {
-                // handle onPress
+                navigation.navigate('Home')
               }}>
               <View style={styles.btn}>
                 <Text style={styles.btnText}>Sign in</Text>
