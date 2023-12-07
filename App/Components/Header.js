@@ -19,12 +19,12 @@ const Header = () => {
           color={Colors.BLACK}
           initials = {fakeUser.initials}
         />
-        <Text>Hi {fakeUser.name}
+        <Text style={styles.text}>Hi {fakeUser.name}
           <Text style={styles.role}> ({role})</Text>
         </Text>
         
       </View>
-      <Text>Companion: {fakeCompanion.name} </Text>
+      <Text style={styles.text}>Companion: {fakeCompanion.name} </Text>
     </View>
   )
 }
@@ -47,6 +47,10 @@ const styles = StyleSheet.create({
   role: {
     fontSize:10,
     color:Colors.WHITE
+  },
+  text:{
+    fontFamily:'Poppins-Light',
   }
+
 
 })

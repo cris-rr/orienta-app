@@ -13,7 +13,7 @@ const RoundedInitialsThumbnail = ({ initials, size = 40, color = '#fff', backgro
         justifyContent: 'center',
       }}
     >
-      <Text style={{ color: color, fontSize: size * 0.45 }}>{initials.toUpperCase()}</Text>
+      <Text style={{ color: color, fontFamily:'Poppins-Regular', fontSize: size * 0.45 }}>{initials.toUpperCase()}</Text>
     </View>
   );
 };

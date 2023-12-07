@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     marginBottom: 5 
   },
   normal:{
+    // fontFamily:'Poppins-Regular',
     fontSize: 12, 
   },
   firstRow:{
@@ -70,6 +71,7 @@ const styles = StyleSheet.create({
     width:'65%',
   },
   address:{
+    // fontFamily:'Poppins-Regular',
     marginTop: 5,
     fontSize: 12,
     flex:1,

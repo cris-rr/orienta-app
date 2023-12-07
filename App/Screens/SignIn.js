@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -9,6 +9,8 @@ import {
   TextInput,
 } from 'react-native'
 import { useFonts } from 'expo-font'
+import * as SplashScreen from 'expo-splash-screen';
+
 
 import Colors from '../Utils/Colors'
 import imageApp from './../../assets/images/hands3.png'
@@ -16,17 +18,34 @@ import imageApp from './../../assets/images/hands3.png'
 const SignIn = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     'Poppins-Regular': require('../../assets/fonts/Poppins-Regular.ttf'),
-    'Poppins-Bold': require('../../assets/fonts/Poppins-Bold.ttf'),
-    'Poppins-SemiBold': require('../../assets/fonts/Poppins-SemiBold.ttf'),
+    // 'Poppins-Bold': require('../../assets/fonts/Poppins-Bold.ttf'),
+    // 'Poppins-SemiBold': require('../../assets/fonts/Poppins-SemiBold.ttf'),
     'Poppins-Light': require('../../assets/fonts/Poppins-Light.ttf'),
-    'Poppins-ExtraLight': require('../../assets/fonts/Poppins-ExtraLight.ttf')
+    // 'Poppins-ExtraLight': require('../../assets/fonts/Poppins-ExtraLight.ttf')
   })
   const [form, setForm] = useState({
     email: '',
     password: '',
   });
+
+  useEffect(() => {
+    async function prepare() {
+      await SplashScreen.preventAutoHideAsync()
+    } prepare()
+  }, [])
+    
+    const onLayout = useCallback(async () => {
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync()
+      }
+    }, [fontsLoaded])
+
+  if (!fontsLoaded) {
+    return null
+  }
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#e8ecf4', width: '100%' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#e8ecf4', width: '100%' }} onLayout={onLayout}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Image source={imageApp}

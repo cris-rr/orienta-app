@@ -69,7 +69,7 @@ const users = [
 
 ]
 
-const companions =[
+const companionsDB =[
   {
     companionCode: '01',
     senior: {
@@ -103,6 +103,56 @@ const companions =[
   
 
 ]
+
+// interactions
+const familyView = {
+  companionId: 1,
+  id: 1,
+  name: 'Ruiz Roman',
+  phone: '982668447',
+  address: 'Av Lima 663. San Miguel',
+  sector: 1,
+  status: true,
+  membersQty: 4,
+  interactions: [
+    {
+      id: 1,
+      type:'Visit',
+      date: '2022-03-01',
+      effective: true,
+      comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, sit amet aliquam nisl nunc eget nunc.'
+    },
+    {
+      id: 2,
+      type:'Call',
+      date: '2022-04-05',
+      effective: true,
+      comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, sit amet aliquam nisl nunc eget nunc.'
+    },
+    {
+      id: 3,
+      type:'Call',
+      date: '2022-05-05',
+      effective: false,
+      comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, sit amet aliquam nisl nunc eget nunc.'
+    },
+    {
+      id: 4,
+      type:'Visit',
+      date: '2022-07-15',
+      effective: true,
+      comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, sit amet aliquam nisl nunc eget nunc.'
+    },
+ 
+    {
+      id: 5,
+      type:'Visit',
+      date: '2023-01-25',
+      effective: false,
+      comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, sit amet aliquam nisl nunc eget nunc.'
+    },
+  ],
+}
 
 const familiesAssigned = [
   {
@@ -245,4 +295,12 @@ const families = [
   },
 ];
 
-export {fakeUser, fakeCompanion, familiesAssigned, companions, families, users}
+export {
+  fakeUser,
+  fakeCompanion,
+  familiesAssigned,
+  companionsDB,
+  families,
+  users,
+  familyView
+};
