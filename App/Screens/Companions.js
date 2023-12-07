@@ -7,7 +7,6 @@ import AddButton from '../Components/floatButton';
 import AddCompanionModal from '../Screens/Modals/AddCompanionModal'
 
 const Companions = () => {
-  // console.log({companionsDB});
   const [isAddModalVisible, setAddModalVisible] = useState(false);
   const [companions, setCompanions] = useState(companionsDB);
   
@@ -17,15 +16,16 @@ const Companions = () => {
 
   const handleAddPress = () => {
     setAddModalVisible(true);
-    console.log('add button pressed');
   };
 
   const handleCloseModal = () => {
-    setAddModalVisible(false);
-  };
+    setAddModalVisible(false)
+  }
 
   const handleAddData = (newCompanion) => {
-    setCompanions([...companions, newCompanion])
+    console.log({newCompanion})
+    //TODO: prepare companions for the collection, it should include id, fullName and phone, sector
+    // setCompanions([...companions, newCompanion])
   }
 
   return (
@@ -48,14 +48,14 @@ const Companions = () => {
         animationType="fade"
         transparent={true}
         visible={isAddModalVisible}
-        onRequestClose={handleCloseModal}
+        onRequestClose={() => setAddModalVisible(false)}
       >
         <AddCompanionModal
           isVisible={isAddModalVisible}
+          // onRequestClose={() => setAddModalVisible(false)}
           onClose={handleCloseModal}
           onSubmit={handleAddData}
         />
-        <Text>Mostrar Modal para agregar companions</Text>
       </Modal>
 
       <AddButton onPress={() => handleAddPress()} />

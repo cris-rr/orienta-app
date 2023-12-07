@@ -39,7 +39,7 @@ const AddInteractionModal = ({ isVisible, onClose, onSubmit }) => {
 
   const handleSubmit = (event) => {
     const newData = { id: Math.random(), ...formData }
-    console.log({newData})
+    // console.log({newData})
     onSubmit(newData)
     onClose()
   }
@@ -49,7 +49,7 @@ const AddInteractionModal = ({ isVisible, onClose, onSubmit }) => {
       <SafeAreaView style={styles.safeArea}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.centeredView}>
-            <Text style={styles.title}>Add Interaction</Text>
+            <Text style={styles.title}>Interaction</Text>
             <View style={styles.modalView}>
               <Text>Select interaction type: </Text>
               <ButtonGroup
