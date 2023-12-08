@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, Switch, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import { SelectList } from 'react-native-dropdown-select-list'
-// import { Picker } from '@react-native-picker/picker'
 import { users } from '../../Utils/data'
 import Colors from '../../Utils/Colors'
 import { colors } from 'react-native-elements'
@@ -66,7 +65,7 @@ const AddCompanionModal = ({onClose, onSubmit}) => {
             </View>
             <View style={styles.bottomRow}>
               <View style={styles.status}>
-                <Text>This companion is active? </Text>
+                <Text>Is this companion active? </Text>
                 <Switch
                   style={styles.switch}
                   onValueChange={(value) => handleChange('status', value)}

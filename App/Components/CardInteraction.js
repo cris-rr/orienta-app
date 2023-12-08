@@ -25,6 +25,7 @@ const CardInteraction = ({ item, onPress }) => {
           <Text style={styles.title}>{item.type}</Text>
           <Text style={styles.description}>{item.effective?'Yes':'No'}</Text>
           <Text style={styles.description}>{item.date}</Text>
+          {/* TODO: include companion names when is call from family */}
         </View>
         <Text style={styles.description}>{comment}</Text>
       </View>

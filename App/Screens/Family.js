@@ -1,18 +1,28 @@
-import { StyleSheet, Text, View, FlatList, TextInput } from 'react-native'
+import { StyleSheet, Text, View, FlatList, TextInput, Modal } from 'react-native'
 import { useState } from 'react';
 import React from 'react'
 import Header from '../Components/Header'
 import { families } from '../Utils/data'
-import CardSimple from '../Components/CardSimple';
-import AddButton from '../Components/floatButton';
+import CardSimple from '../Components/CardSimple'
+import AddButton from '../Components/floatButton'
+import FamilyModal from '../Screens/FamilyModal'
+import AddFamilyModal from './Modals/AddFamilyModal';
 
 const Family = () => {
-  const handleCardPress = (id) => {
-    console.log(`Card with ID ${id} was clicked`);
-  }
+  
   const [searchTerm, setSearchTerm] = useState('')
-  const [filteredData, setFilteredData] = useState(families)  
+  const [filteredData, setFilteredData] = useState(families)
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [selectedItem, setSelectedItem] = useState(null)  
+  const [isAddModalVisible, setAddModalVisible] = useState(false)
 
+  const handleCardPress = (id, item) => {
+    setSelectedItem(item)
+    // TODO: get the familyView data filtered by family
+    setIsModalVisible(true)
+    
+  }
+  
   const handleSearchChange = (text) => {
     setSearchTerm(text);
     const filteredItems = families.filter((item) => {
@@ -21,11 +31,23 @@ const Family = () => {
     setFilteredData(filteredItems);
   };
 
+  const handleAddPress = () => {
+    setAddModalVisible(true);
+  }
 
+  const handleCloseModal = () => {
+    setAddModalVisible(false)
+  }
+
+  const handleAddData = (newFamily) => {
+    console.log({newFamily})
+    //TODO: prepare families for the collection, it should include id, fullName and phone, sector
+    // setFamilies([...familiess, newFamily])
+  }
+  
   return (
     <>
     <Header />
-    {/* <Text style={styles.subTitle}>All families</Text> */}
     <TextInput
       placeholder="Search"
       onChangeText={handleSearchChange}
@@ -34,11 +56,39 @@ const Family = () => {
     <View>
       <FlatList
         data={filteredData}
-        renderItem={({ item }) => <CardSimple item={item} onPress={() => handleCardPress(item.id)} />}
+        renderItem={({ item }) => <CardSimple item={item} onPress={() => handleCardPress(item.id, item)} />}
         keyExtractor = {(item) => item.id}
       />
     </View>
-    <AddButton />
+
+    <Modal
+      animationType='slide'
+      transparent={true}
+      visible= {isModalVisible}
+      onRequestClose={() => setIsModalVisible(false)}
+      >
+      <FamilyModal
+        setIsModalVisible = {setIsModalVisible}
+        item = {selectedItem}
+        onRequestClose={() => setIsModalVisible(false)}
+      />
+    </Modal>
+
+    <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isAddModalVisible}
+        onRequestClose={() => setAddModalVisible(false)}
+      >
+        <AddFamilyModal
+          isVisible={isAddModalVisible}
+          // onRequestClose={() => setAddModalVisible(false)}
+          onClose={handleCloseModal}
+          onSubmit={handleAddData}
+        />
+      </Modal>
+
+    <AddButton onPress={() => handleAddPress()} />
     </>
   )
 }
