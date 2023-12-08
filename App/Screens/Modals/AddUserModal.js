@@ -4,14 +4,9 @@ import { colors } from 'react-native-elements'
 import NumericInput from 'react-native-numeric-input'
 import Colors from '../../Utils/Colors'
 
-const AddFamilyModal = ({onClose, onSubmit}) => {
-  const [formData, setFormData] = useState({name: '', phone: '', address:'', sector: '', status: false, membersQty: 1})
+const AddUserModal = ({onClose, onSubmit}) => {
+  const [formData, setFormData] = useState({name: '', email:'', member_code:'', phone: '', role:1, sector: '', status: true, password:''})
   
-  // useEffect(() => {
-  //   setFormData((prevState) => ({ ...prevState, seniorId: selected}))
-  //   setFormData((prevState) => ({ ...prevState, minorId: selected2}))
-  // }, [selected, selected2])
-
   const handleChange = (name, value) => {
     setFormData((prevState) => ({ ...prevState, [name]: value }))
   }
@@ -26,17 +21,36 @@ const AddFamilyModal = ({onClose, onSubmit}) => {
     <View style={styles.centeredView}>
       <ScrollView style={styles.scroll}>
         <View style={styles.modalView}>
-          <Text style={styles.title}>Family</Text>
+          <Text style={styles.title}>User</Text>
           <View style={styles.content}>
             <View style={styles.row}>
               <Text>Name:</Text>
               <TextInput
                 onChangeText={(value) => handleChange('name', value)}
-                placeholder="Family Name"
+                placeholder="User name"
                 style={styles.input}
                 value={formData.name}
               />
             </View>
+            <View style={styles.row}>
+              <Text>Email:</Text>
+              <TextInput
+                onChangeText={(value) => handleChange('email', value)}
+                placeholder="Enter your email"
+                style={styles.input}
+                value={formData.email}
+              />
+            </View>
+            <View style={styles.row}>
+              <Text>Member code:</Text>
+              <TextInput
+                onChangeText={(value) => handleChange('member_code', value)}
+                placeholder="Member code"
+                style={styles.input}
+                value={formData.member_code}
+              />
+            </View>
+
             <View style={styles.row}>
               <Text>Phone:</Text>
               <TextInput
@@ -47,39 +61,28 @@ const AddFamilyModal = ({onClose, onSubmit}) => {
               />
             </View>
             <View style={styles.row}>
-              <Text>Sector:</Text>
-              <TextInput
-                onChangeText={(value) => handleChange('sector', value)}
-                placeholder="Sector #"
-                style={styles.input}
-                value={formData.sector}
-              />
-            </View>
-            <View style={styles.row}>
-              <Text>Total family members:</Text>
+              <Text>Role (1 to 3):</Text>
               <NumericInput
-                onChange={(value) => handleChange('membersQty', value)}
-                value={formData.membersQty}
-                minValue={0}
+                onChange={(value) => handleChange('role', value)}
+                value={formData.role}
+                minValue={1}
+                maxValue={3}
               />
             </View>
-            <View style={styles.column}>
-              <Text>Enter family address:</Text>
-              <ScrollView style={styles.inputScroll}>
-                <TextInput
-                  multiline={true}
-                  numberOfLines={2}
-                  onChangeText={(value) => handleChange('address', value)}
-                  placeholder="Family address"
-                  style={styles.inputBig}
-                  value={formData.address}
-                />
-              </ScrollView>
+            
+            <View style={styles.row}>
+              <Text>Passwrod:</Text>
+              <TextInput
+                onChangeText={(value) => handleChange('password', value)}
+                placeholder="Password"
+                style={styles.input}
+                value={formData.password}
+              />
             </View>
 
             <View style={styles.bottomRow}>
               <View style={styles.status}>
-                <Text>Is this family active? </Text>
+                <Text>Is this member active? </Text>
                 <Switch
                   style={styles.switch}
                   onValueChange={(value) => handleChange('status', value)}
@@ -109,7 +112,7 @@ const AddFamilyModal = ({onClose, onSubmit}) => {
   );
 }
 
-export default AddFamilyModal
+export default AddUserModal
 
 const styles = StyleSheet.create({
     centeredView: {
@@ -177,7 +180,7 @@ const styles = StyleSheet.create({
     },
     input: {
       paddingBottom: 10,
-      marginBottom: 10,
+      // marginBottom: 10,
       marginLeft: 10,
       // borderBottomWidth: 1,
       borderBottomColor: Colors.BLUE,
@@ -186,7 +189,7 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       paddingHorizontal: 10,
       paddingVertical: 5,
-      width: '80%',
+      width: '60%',
     },
     inputScroll: {
       height: 65,
@@ -195,19 +198,6 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       padding: 10,
     },
-    inputBig: {
-      paddingBottom: 10,
-      marginBottom: 5,
-      textAlignVertical: 'top',
-      // borderBottomColor: Colors.BLUE,
-      // borderWidth: 0.5,
-      // borderColor: colors.grey4,
-      // borderRadius: 10,
-      // paddingHorizontal: 10,
-      // paddingVertical: 5,
-      // width: '100%',
-    },
-
     actions: {
       flexDirection: 'row',
       justifyContent: 'space-between',

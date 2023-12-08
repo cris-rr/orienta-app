@@ -47,34 +47,39 @@ const Family = () => {
   
   return (
     <>
-    <Header />
-    <TextInput
-      placeholder="Search"
-      onChangeText={handleSearchChange}
-      style={{ borderWidth: 1, borderColor: '#ccc', padding: 10 }}
-    />
-    <View>
-      <FlatList
-        data={filteredData}
-        renderItem={({ item }) => <CardSimple item={item} onPress={() => handleCardPress(item.id, item)} />}
-        keyExtractor = {(item) => item.id}
+      <Header />
+      <TextInput
+        placeholder="Search"
+        onChangeText={handleSearchChange}
+        style={{ borderWidth: 1, borderColor: '#ccc', padding: 10 }}
       />
-    </View>
+      <View>
+        <FlatList
+          data={filteredData}
+          renderItem={({ item }) => (
+            <CardSimple
+              item={item}
+              onPress={() => handleCardPress(item.id, item)}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
 
-    <Modal
-      animationType='slide'
-      transparent={true}
-      visible= {isModalVisible}
-      onRequestClose={() => setIsModalVisible(false)}
-      >
-      <FamilyModal
-        setIsModalVisible = {setIsModalVisible}
-        item = {selectedItem}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
         onRequestClose={() => setIsModalVisible(false)}
-      />
-    </Modal>
+      >
+        <FamilyModal
+          setIsModalVisible={setIsModalVisible}
+          item={selectedItem}
+          onRequestClose={() => setIsModalVisible(false)}
+        />
+      </Modal>
 
-    <Modal
+      <Modal
         animationType="fade"
         transparent={true}
         visible={isAddModalVisible}
@@ -82,15 +87,14 @@ const Family = () => {
       >
         <AddFamilyModal
           isVisible={isAddModalVisible}
-          // onRequestClose={() => setAddModalVisible(false)}
           onClose={handleCloseModal}
           onSubmit={handleAddData}
         />
       </Modal>
 
-    <AddButton onPress={() => handleAddPress()} />
+      <AddButton onPress={() => handleAddPress()} />
     </>
-  )
+  );
 }
 
 export default Family
