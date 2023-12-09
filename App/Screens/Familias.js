@@ -24,6 +24,7 @@ const Familias = () => {
         data={familiesAssigned}
         renderItem={({ item }) => <Card item={item} onPress={() => handleCardPress(item.id, item)} />}
         keyExtractor = {(item) => item.id}
+        contentContainerStyle={{ paddingBottom: 100 }}
       />
     </View>
     <Modal

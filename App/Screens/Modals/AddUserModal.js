@@ -3,18 +3,31 @@ import React, {useEffect, useState} from 'react'
 import { colors } from 'react-native-elements'
 import NumericInput from 'react-native-numeric-input'
 import Colors from '../../Utils/Colors'
+import { useContext } from 'react'
+import UserContext from '../../Context/UserContext'
 
-const AddUserModal = ({onClose, onSubmit}) => {
-  const [formData, setFormData] = useState({name: '', email:'', member_code:'', phone: '', role:1, sector: '', status: true, password:''})
+const AddUserModal = ({onClose}) => {
+
+  const {addUser} = useContext(UserContext)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    member_code: '',
+    phone: '',
+    role: 1,
+    sector: '1',
+    status: true,
+    password: ''
+  });
   
   const handleChange = (name, value) => {
     setFormData((prevState) => ({ ...prevState, [name]: value }))
   }
 
   const handleSubmit = (event) => {
-    const newData = { id: Math.random(), ...formData }
-    console.log('in AddFamilyModal', {newData})
-    onSubmit(newData)
+    // const newData = { id: Math.random(), ...formData }
+    console.log('in AddFamilyModal', {formData})
+    addUser(formData)
     onClose()
   }
   return (
@@ -61,6 +74,15 @@ const AddUserModal = ({onClose, onSubmit}) => {
               />
             </View>
             <View style={styles.row}>
+              <Text>Sector: </Text>
+              <TextInput
+                onChangeText={(value) => handleChange('sector', value)}
+                placeholder="Sector"
+                style={styles.input}
+                value={formData.sector}
+              />
+            </View>
+            <View style={styles.row}>
               <Text>Role (1 to 3):</Text>
               <NumericInput
                 onChange={(value) => handleChange('role', value)}
@@ -75,6 +97,7 @@ const AddUserModal = ({onClose, onSubmit}) => {
               <TextInput
                 onChangeText={(value) => handleChange('password', value)}
                 placeholder="Password"
+                secureTextEntry={true}
                 style={styles.input}
                 value={formData.password}
               />
@@ -119,7 +142,7 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
-      marginTop: 70,
+      marginTop: 20,
       
     },
     modalView: {
@@ -130,7 +153,7 @@ const styles = StyleSheet.create({
       paddingBottom: 35,
       // alignItems: "center",
       width: '90%',
-      height: '90%',
+      height: '92%',
       shadowColor: "#000",
       shadowOffset: {
         width: 0,

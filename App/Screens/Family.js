@@ -63,6 +63,7 @@ const Family = () => {
             />
           )}
           keyExtractor={(item) => item.id}
+          contentContainerStyle={{ paddingBottom: 100 }}
         />
       </View>
 

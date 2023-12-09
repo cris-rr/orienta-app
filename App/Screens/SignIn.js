@@ -7,21 +7,22 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
+  ScrollView,
 } from 'react-native'
-import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen';
-
-
-import Colors from '../Utils/Colors'
+import { useContext } from 'react'
+import { useFonts } from 'expo-font'
+import AuthContext from '../Context/AuthContext';
 import imageApp from './../../assets/images/hands3.png'
+import Colors from '../Utils/Colors'
+
 
 const SignIn = ({ navigation }) => {
+  const { signIn, isAuthenticated, role, user } = useContext(AuthContext)
+  const [error, setError] = useState('')
   const [fontsLoaded] = useFonts({
     'Poppins-Regular': require('../../assets/fonts/Poppins-Regular.ttf'),
-    // 'Poppins-Bold': require('../../assets/fonts/Poppins-Bold.ttf'),
-    // 'Poppins-SemiBold': require('../../assets/fonts/Poppins-SemiBold.ttf'),
     'Poppins-Light': require('../../assets/fonts/Poppins-Light.ttf'),
-    // 'Poppins-ExtraLight': require('../../assets/fonts/Poppins-ExtraLight.ttf')
   })
   const [form, setForm] = useState({
     email: '',
@@ -33,12 +34,33 @@ const SignIn = ({ navigation }) => {
       await SplashScreen.preventAutoHideAsync()
     } prepare()
   }, [])
+
+  useEffect(() => {
+    if (isAuthenticated && role) {
+      // console.log('wasSuccessful', isAuthenticated, role, user)
+      navigation.navigate('Home');
+    }
+  }, [isAuthenticated, role]);
     
-    const onLayout = useCallback(async () => {
-      if (fontsLoaded) {
-        await SplashScreen.hideAsync()
-      }
-    }, [fontsLoaded])
+  useEffect(() => {
+    if (user) {
+      console.log('from signIn componet', user)
+    }
+  }, [user])
+
+  const onLayout = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync()
+    }
+  }, [fontsLoaded])
+
+  const handleSubmit = async (event) => {
+    try {
+      await signIn(form.email, form.password)  
+    } catch (error) {
+      setError(error.message)
+    }
+  }
 
   if (!fontsLoaded) {
     return null
@@ -46,77 +68,70 @@ const SignIn = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#e8ecf4', width: '100%' }} onLayout={onLayout}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Image source={imageApp}
-            style={styles.headerImg}/>
-
-          <Text style={styles.title}>
-            Sign in to <Text style={{ color: '#075eec' }}>Orienta</Text>
-          </Text>
-
-          <Text style={styles.subtitle}>
-            Helping priesthood to serve better
-          </Text>
-        </View>
-
-        <View style={styles.form}>
-          <View style={styles.input}>
-            <Text style={styles.inputLabel}>Email address</Text>
-
-            <TextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="email-address"
-              onChangeText={email => setForm({ ...form, email })}
-              placeholder="john@example.com"
-              placeholderTextColor="#6b7280"
-              style={styles.inputControl}
-              value={form.email}
-            />
+      <ScrollView style={styles.scroll}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Image source={imageApp}
+              style={styles.headerImg}/>
+            <Text style={styles.title}>
+              Sign in to <Text style={{ color: '#075eec' }}>Orienta</Text>
+            </Text>
+            <Text style={styles.subtitle}>
+              Helping priesthood to serve better
+            </Text>
           </View>
-
-          <View style={styles.input}>
-            <Text style={styles.inputLabel}>Password</Text>
-
-            <TextInput
-              autoCorrect={false}
-              onChangeText={password => setForm({ ...form, password })}
-              placeholder="********"
-              placeholderTextColor="#6b7280"
-              style={styles.inputControl}
-              secureTextEntry={true}
-              value={form.password}
-            />
-          </View>
-
-          <View style={styles.formAction}>
+          <View style={styles.form}>
+            <View style={styles.input}>
+              <Text style={styles.inputLabel}>Email address</Text>
+              <TextInput
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="email-address"
+                onChangeText={email => setForm({ ...form, email })}
+                placeholder="john@example.com"
+                placeholderTextColor="#6b7280"
+                style={styles.inputControl}
+                value={form.email}
+              />
+            </View>
+            <View style={styles.input}>
+              <Text style={styles.inputLabel}>Password</Text>
+              <TextInput
+                autoCorrect={false}
+                onChangeText={password => setForm({ ...form, password })}
+                placeholder="********"
+                placeholderTextColor="#6b7280"
+                style={styles.inputControl}
+                secureTextEntry={true}
+                value={form.password}
+              />
+            </View>
+            <View style={styles.formAction}>
+              <TouchableOpacity
+                onPress={handleSubmit}>
+                <View style={styles.btn}>
+                  <Text style={styles.btnText}>Sign in</Text>
+                </View>
+              </TouchableOpacity>
+              {error && <Text style={{ color: 'red' }}>{error}</Text>}
+        
+            </View>
+            <View style={styles.footer}>
             <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Home')
-              }}>
-              <View style={styles.btn}>
-                <Text style={styles.btnText}>Sign in</Text>
-              </View>
-            </TouchableOpacity>
-            
-            
+                onPress={() => {
+                  // handle link
+                }}
+                style={{ marginTop: 60 }}>
+                <Text style={styles.formFooter}>
+                  Don't have an account?{' '}
+                  <Text style={{ fontWeight: 'bold' }}>Ask your Quorum presidency</Text>
+                </Text>
+              </TouchableOpacity>
+            </View>
+        
           </View>
-          <View style={styles.footer}>
-          <TouchableOpacity
-              onPress={() => {
-                // handle link
-              }}
-              style={{ marginTop: 60 }}>
-              <Text style={styles.formFooter}>
-                Don't have an account?{' '}
-                <Text style={{ textDecorationLine: 'underline' }}>Sign up</Text>
-              </Text>
-            </TouchableOpacity>
-          </View>
-          
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -128,6 +143,10 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
+  },
+  scroll: {
+    width: '100%',
+    height: '100%',
   },
   header: {
     marginVertical: 36,

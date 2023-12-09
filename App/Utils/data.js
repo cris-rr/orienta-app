@@ -9,7 +9,7 @@ const fakeUser = {
 
 const fakeCompanion  = {
   id: 1,
-  name: 'Frank',
+  name: 'Frank Ruiz',
   fullName: 'Frank Ruiz',
   email: 'john.mckinley@examplepetstore.com',
   initials: 'JM'

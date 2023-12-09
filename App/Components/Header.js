@@ -1,32 +1,48 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
-import React from 'react'
-
+import React, {useContext, useEffect, useState} from 'react'
+import AuthContext from '../Context/AuthContext';
 import { RoundedInitialsThumbnail } from './../Components/Thumbnail'
 import { fakeUser, fakeCompanion } from './../Utils/data'
 import Colors from '../Utils/Colors'
+import { getInitials } from '../Utils/helpers';
 
 const Header = () => {
-  // TODO: replace this with user information if it is loaded
+  const {userName, role} = useContext(AuthContext)
+  // console.log('fromHeader', userName,  role);
   const isLoaded = true
-  const role = fakeUser.role > 1 ? 'Admin' : 'User'
+  const roleName = role > 1 ? 'Admin' : 'User'
   // console.log({role: role})
-  return isLoaded && (
-    <View style={styles.oneLine}>
-      <View style={styles.user}>
-        <RoundedInitialsThumbnail 
-          size={40}
-          backgroundColor={Colors.GREEN_LIGHT}
-          color={Colors.BLACK}
-          initials = {fakeUser.initials}
-        />
-        <Text style={styles.text}>Hi {fakeUser.name}
-          <Text style={styles.role}> ({role})</Text>
-        </Text>
-        
+  const initials = getInitials(userName)
+  
+  
+  return (
+    isLoaded && (
+      <View style={styles.oneLine}>
+        <View style={styles.user}>
+          <RoundedInitialsThumbnail
+            size={40}
+            backgroundColor={Colors.GREEN_LIGHT}
+            color={Colors.BLACK}
+            initials={initials}
+          />
+          <View style={styles.banda}>
+            <View style={styles.title}>
+              <Text style={styles.text}>
+                Hi {userName}
+              </Text>
+              <Text style={styles.role}>(Role: {roleName})</Text>              
+            </View>
+            <View style={styles.subRow}>
+              
+              <Text style={styles.companion}>
+                Companion: {fakeCompanion.name}{' '}
+              </Text>
+            </View>
+          </View>
+        </View>
       </View>
-      <Text style={styles.text}>Companion: {fakeCompanion.name} </Text>
-    </View>
-  )
+    )
+  );
 }
 
 export default Header
@@ -40,17 +56,54 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.BLUE
   },
   user: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    gap:10
+    gap:20,
+    justifyContent: 'space-between',
+    // alignItems: 'center',
+  },
+  banda: {
+    flex: 1,
+    flexDirection: 'column',
+    // alignItems: 'flex-end',
+    justifyContent: 'center',
+    paddingTop: 3,
+    gap: 2,
+  },
+  title: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 1,
   },
   role: {
     fontSize:10,
-    color:Colors.WHITE
+    color:Colors.WHITE,
+    fontWeight: 'bold',
+    lineHeight: 16,
   },
   text:{
     fontFamily:'Poppins-Light',
-  }
+    fontSize:16,
+    textAlign: 'left',
+    lineHeight: 20,
+    // fontWeight: 'semi-bold',
+  },
+  subRow:{
+    margin: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 20,
+    justifyContent: 'space-between',
+  },
+  companion:{
+    fontFamily:'Poppins-Light',
+    fontSize:12,
+    color:Colors.BLACK,
+    lineHeight: 18,
+  },
+
 
 
 })

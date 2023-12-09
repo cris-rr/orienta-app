@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
-
-import imageFamily from './../../assets/images/family2.jpg'
+import { getInitials } from '../Utils/helpers';
 import Colors from '../Utils/Colors'
 import { RoundedInitialsThumbnail } from './../Components/Thumbnail'
 
 const CardUser = ({ item, fullName = '', onPress }) => {
   const name = fullName !=='' ? fullName : item.name
+  const initials = getInitials(name)
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.niceCard}>
@@ -15,9 +15,8 @@ const CardUser = ({ item, fullName = '', onPress }) => {
             size={40}
             backgroundColor={Colors.GREEN_LIGHT}
             color={Colors.BLACK}
-            initials = {item.initials}
+            initials = {initials}
           />
-          {/* <Image source={imageFamily} style={styles.icon} /> */}
           <View style={styles.description}>
             <Text style={styles.name}>{name}</Text>
             <View style={styles.sameLine}>
